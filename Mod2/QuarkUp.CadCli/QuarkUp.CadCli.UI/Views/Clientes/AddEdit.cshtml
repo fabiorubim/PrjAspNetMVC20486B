@@ -1,0 +1,73 @@
+﻿@model QuarkUp.CadCli.UI.Models.Cliente
+@{
+    ViewBag.Title = "CadCli :: Clientes";
+    ViewBag.SubTitle = "Novo Cliente";
+}
+
+@*<form action="/" method="post">
+
+</form>*@
+
+
+@using(Html.BeginForm("Salvar","Clientes",FormMethod.Post))
+{
+    @*<div>
+        <label>Nome:</label>
+        <input type="text" value="" name="nome" />
+    </div>*@ 
+    
+    @*<input type="hidden" value="@Model.Id"   />*@
+    //ou
+    @Html.HiddenFor(cli => cli.Id)
+    
+    
+    <div class="form-group">
+        @Html.LabelFor(cli => cli.Nome)
+        @Html.TextBoxFor(cli => cli.Nome, new {@class="form-control",autofocus="" })
+        @Html.ValidationMessageFor(cli => cli.Nome, null, new {@class="text-danger" })
+    </div>
+    
+    <div class="form-group">
+        @Html.LabelFor(cli => cli.Idade)
+        @Html.TextBoxFor(cli => cli.Idade, new {@class="form-control",type="number" })
+        @Html.ValidationMessageFor(cli => cli.Idade, null, new {@class="text-danger" })
+    </div>
+    
+    <div>
+        @*<button type="submit">Salvar</button>*@
+        <button class="btn btn-default">Salvar</button>
+        |
+        <a href="@Url.Action("Index")">Voltar</a>
+    </div>
+}
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    @*Faz com que as validações não vá até o servidor*@
+    <script>
+        (function ($) {
+            var defaultOptions = {
+                validClass: 'has-success',
+                errorClass: 'has-error',
+                highlight: function (element, errorClass, validClass) {
+                    $(element).closest(".form-group")
+                    .removeClass(validClass)
+                    .addClass('has-error');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).closest(".form-group")
+                    .removeClass('has-error')
+                    .addClass(validClass);
+                }
+            };
+
+            $.validator.setDefaults(defaultOptions);
+
+            $.validator.unobtrusive.options = {
+                errorClass: defaultOptions.errorClass,
+                validClass: defaultOptions.validClass,
+            };
+        })(jQuery);
+    </script>
+}

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<QuarkUp.CadCli.UI.Models.Cliente>
+@{
+    ViewBag.Title = "CadCli :: Clientes";
+    ViewBag.SubTitle = "Listagem de Clientes";
+}
+
+<div>
+    @*Meio diferentes de fazer a mesma coisa*@
+    @*<a href="Clientes/Novo" class="btn btn-success">Novo</a>*@
+    <a href="@Url.Action("Novo","Clientes")" class="btn btn-success">Novo</a> <!--Helper-->
+    @*@Html.ActionLink("Adicionar", "Novo", "Clientes", new {@class="btn btn-success" })*@
+
+</div>
+
+<br />
+
+<table class="table table-condensed table-hover">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Idade</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cliente in Model)
+        {
+          <tr>
+            <td>@cliente.Id</td>
+            <td>@cliente.Nome</td>
+            <td>@cliente.Idade</td>
+            <td>
+                <a href="Clientes/Editar/@cliente.Id">Editar</a>
+                <a href="javascript:alert('Excluir Cliente @cliente.Id')">Excluir</a>
+            </td>
+        </tr>  
+        }       
+
+    </tbody>
+</table>
