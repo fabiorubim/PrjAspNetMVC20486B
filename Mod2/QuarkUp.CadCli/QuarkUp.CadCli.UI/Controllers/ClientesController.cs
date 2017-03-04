@@ -34,7 +34,7 @@ namespace QuarkUp.CadCli.UI.Controllers
 
         public ActionResult Novo()
         {
-            return View("AddEdit");//Não é o nome padrão, que no caso é "Novo"
+            return View("AddEdit",new Cliente());//Não é o nome padrão, que no caso é "Novo"
         }
 
         public ActionResult Editar(int id)
@@ -44,22 +44,47 @@ namespace QuarkUp.CadCli.UI.Controllers
             //ou
             var cliente = _ctx.Clientes.Find(id); //.FirstOrDefault(x => x.codigo == id); //FInd é do Entity framework
 
+            if (cliente == null)
+                return HttpNotFound();
+
             return View("AddEdit",cliente);
         }
 
+        [HttpPost]
         public ActionResult Salvar(Cliente cli)
         {
             if (ModelState.IsValid)
             {
-                _ctx.Clientes.Add(cli);
+                if (cli.Id == 0)
+                {
+                    _ctx.Clientes.Add(cli);
+                }
+                else
+                {
+                    _ctx.Entry(cli).State = System.Data.Entity.EntityState.Modified;
+                }
+
                 _ctx.SaveChanges();
                 //Retorna uma string na actionresult
                 //return Content("Dados salvos!");
                 return RedirectToAction("Index");
             }
 
-            return View("Novo");
+            return View("AddEdit");
         }
+
+        [HttpPost]
+        public ActionResult Excluir(int id)
+        {
+            var cli = _ctx.Clientes.Find(id);
+            _ctx.Clientes.Remove(cli);
+            _ctx.SaveChanges();
+
+            //Status foi inventado
+            return Json(new { status=true,msg="Excluído com sucesso!"});
+
+        }
+
 
 
         protected override void Dispose(bool disposing)
