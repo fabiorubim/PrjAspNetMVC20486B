@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace QuarkUp.CadCli.UI.Controllers
 {
+    [Authorize] //Todos os métodos precisa estar autorizado - Exibe uma página de NOT FOUND
     public class ClientesController : Controller
     {
         //
@@ -22,6 +23,7 @@ namespace QuarkUp.CadCli.UI.Controllers
 
         private readonly CadCliContext _ctx = new CadCliContext();
 
+        [AllowAnonymous]//Só este não precisa de autenticação
         public ActionResult Index()
         {
             var clientes = new List<Cliente>();
