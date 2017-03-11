@@ -76,15 +76,27 @@ namespace QuarkUp.CadCli.UI.Controllers
         [HttpPost]
         public ActionResult Excluir(int id)
         {
+            //throw new Exception("Erro no acesso à base de dados!"); //Para testes
+
             var msg = "Erro na exclusão!";
             var status = false;
-            var cli = _ctx.Clientes.Find(id);
-            if (cli != null)
+
+            try
             {
-                _ctx.Clientes.Remove(cli);
-                _ctx.SaveChanges();
-                msg = "Excluído com sucesso!";
-                status = true;
+                var cli = _ctx.Clientes.Find(id);
+                if (cli != null)
+                {
+                    _ctx.Clientes.Remove(cli);
+                    _ctx.SaveChanges();
+                    msg = "Excluído com sucesso!";
+                    status = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                //Gravar log
+                msg = ex.Message;
             }
 
             //Status foi inventado

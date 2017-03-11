@@ -26,7 +26,7 @@
     <tbody>
         @foreach (var cliente in Model)
         {
-          <tr>
+          <tr data-id="@cliente.Id">
             <td>@cliente.Id</td>
             <td>@cliente.Nome</td>
             <td>@cliente.Idade</td>
@@ -84,7 +84,25 @@
             dataType: "json",
             data:{id:_id},
             success: function (retorno) {
-                console.log(retorno);
+                //console.log(retorno);
+                //retorno.status
+                //retorno.msg
+                if (retorno.status) {
+                    toastr.success(retorno.msg, "FN CadCli");
+                    //Remove a linha na tela, usando AJAX
+                    $("tr").filter("[data-id='"+ _id +"']").remove();
+                } else {
+                    toastr.error(retorno.msg,"FN CadCli");
+                }                
+            },
+            error: function (xhr, status, erro) {
+                //console.log(xhr);
+                //console.log(status);
+                //console.log(erro);
+                toastr.error(erro,"FN CadCli");
+            },
+            complete: function () {
+                $("#delModal").modal("hide");
             }
         });
     });
