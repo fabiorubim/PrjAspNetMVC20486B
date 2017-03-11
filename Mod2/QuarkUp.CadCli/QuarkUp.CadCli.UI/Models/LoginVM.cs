@@ -13,6 +13,6 @@ namespace QuarkUp.CadCli.UI.Models
         public string UserName { get; set; }
 
         [Required(ErrorMessage="Senha obrigatória")]
-        public int Password { get; set; }
+        public string Password { get; set; }
     }
 }

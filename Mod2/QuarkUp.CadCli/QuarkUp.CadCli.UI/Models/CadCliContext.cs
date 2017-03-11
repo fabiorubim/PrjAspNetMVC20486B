@@ -14,6 +14,7 @@ namespace QuarkUp.CadCli.UI.Models
             Database.SetInitializer(new CargaInicial());
         }
         public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
     }
 
     public class CargaInicial:DropCreateDatabaseIfModelChanges<CadCliContext>
@@ -30,6 +31,26 @@ namespace QuarkUp.CadCli.UI.Models
             };
 
             context.Clientes.AddRange(clientes);
+
+            var usuarios = new List<Usuario>{ 
+                new Usuario{
+                        Nome="Tospericageja",
+                        Email="toto@gmail.com",
+                        Senha=StringHelper.Encrypt("123456")},
+
+                new Usuario{
+                        Nome="Fernando",
+                        Email="fernando@gmail.com",
+                        Senha=StringHelper.Encrypt("123456")},
+
+                new Usuario{
+                        Nome="João",
+                        Email="joao@gmail.com",
+                        Senha=StringHelper.Encrypt("123456")},
+            };
+
+            context.Usuarios.AddRange(usuarios);
+
             context.SaveChanges();
 
         }

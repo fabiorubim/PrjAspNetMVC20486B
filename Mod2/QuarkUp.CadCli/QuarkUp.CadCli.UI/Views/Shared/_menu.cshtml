@@ -24,7 +24,10 @@
       <ul class="nav navbar-nav navbar-right">
         @if (!User.Identity.IsAuthenticated)
         {
-             <li><a href="@Url.Action("Login","Conta")">Efetuar Login</a></li>
+             <li><a href="@Url.Action("Login","Conta")">
+                 <i class="glyphicon glyphicon-asterisk"></i>
+                Efetuar Login
+               </a></li>
         }
         else
         {        
@@ -35,7 +38,10 @@
             <li><a href="#">Another action</a></li>
             <li><a href="#">Something else here</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">Efetuar LogOff</a></li>
+            <li><a href="@Url.Action("LogOff","Conta")">
+                <i class="glyphicon glyphicon-off"></i>
+                  Efetuar LogOff
+                </a></li>
           </ul>
         </li>
         }

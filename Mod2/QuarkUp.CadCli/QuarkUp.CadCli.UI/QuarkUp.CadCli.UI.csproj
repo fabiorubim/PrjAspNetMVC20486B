@@ -134,6 +134,8 @@
     <Compile Include="Models\CadCliContext.cs" />
     <Compile Include="Models\Cliente.cs" />
     <Compile Include="Models\LoginVM.cs" />
+    <Compile Include="Models\StringHelper.cs" />
+    <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

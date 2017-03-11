@@ -10,6 +10,8 @@ namespace QuarkUp.CadCli.UI.Controllers
 {
     public class ContaController:Controller
     {
+        public readonly CadCliContext _ctx = new CadCliContext();
+
         public ActionResult Login(string returnUrl){
             ViewBag.isValid = true;
             ViewBag.ReturnUrl = returnUrl;
@@ -22,27 +24,68 @@ namespace QuarkUp.CadCli.UI.Controllers
             ViewBag.isValid = false;
 
             if (ModelState.IsValid){
-                //Autenticação
-                if (login.UserName == "fabio@gmail.com" && login.Password == 123456)
-                {
-                    FormsAuthentication.SetAuthCookie(login.UserName, false);
-                    //return RedirectToAction("Index", "Clientes");
-                    if (string.IsNullOrEmpty(returnUrl))
+
+                var usuario = _ctx.Usuarios.FirstOrDefault(u=>u.Email.ToLower()==login.UserName.ToLower());
+
+                if (usuario != null) {
+                    if (usuario.Senha == StringHelper.Encrypt(login.Password))
                     {
-                        return RedirectToAction("Index","Home");
+                        FormsAuthentication.SetAuthCookie(login.UserName, false);
+                        //return RedirectToAction("Index", "Clientes");
+                        if (string.IsNullOrEmpty(returnUrl))
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
+                        else
+                        {
+                            return RedirectPermanent(returnUrl);
+                        }
+
                     }
                     else
                     {
-                        return RedirectPermanent(returnUrl);
+                      ModelState.AddModelError("Password", "Senha incorreta");
                     }
                 }
-                else{
-                    ModelState.AddModelError("","Usuário não autenticado");
+                else {
+                    ModelState.AddModelError("UserName","E-mail não localizado");
                 }
+
+                //Autenticação
+                //if (login.UserName == "fabio@gmail.com" && login.Password == 123456)
+                //{
+                //    FormsAuthentication.SetAuthCookie(login.UserName, false);
+                //    //return RedirectToAction("Index", "Clientes");
+                //    if (string.IsNullOrEmpty(returnUrl))
+                //    {
+                //        return RedirectToAction("Index","Home");
+                //    }
+                //    else
+                //    {
+                //        return RedirectPermanent(returnUrl);
+                //    }
+                //}
+                //else{
+                //    ModelState.AddModelError("","Usuário não autenticado");
+                //}
             }
 
             //Se não der refaça o login
             return View(login);
         }
+
+        [Authorize]
+        public ActionResult LogOff()
+        {
+            FormsAuthentication.SignOut();
+
+            return RedirectToAction("Login");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _ctx.Dispose();
+        }
+    
     }
 }
