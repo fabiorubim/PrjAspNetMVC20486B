@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>  
+    <link href="/Content/bootstrap.min.css" rel="stylesheet" />  
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+  @Html.Partial("_menu")
+
+ 
+    <div>
+        @ViewBag.SubTitle
+        <br />
+        <div>
+           <!--Onde sai a view -->
+          @RenderBody()
+        </div>
+    </div>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    <script src="/Scripts/bootstrap.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
