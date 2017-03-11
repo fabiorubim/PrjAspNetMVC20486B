@@ -5,7 +5,7 @@
 }
 
 <div>
-    @*Meio diferentes de fazer a mesma coisa*@
+    @*Meios diferentes de fazer a mesma coisa*@
     @*<a href="Clientes/Novo" class="btn btn-success">Novo</a>*@
     <a href="@Url.Action("Novo","Clientes")" class="btn btn-success">Novo</a> <!--Helper-->
     @*@Html.ActionLink("Adicionar", "Novo", "Clientes", new {@class="btn btn-success" })*@
@@ -75,7 +75,18 @@
     $("#confirmaDel").on("click", function () {
         //console.log('excluir...'+$("#data-id").data("id"));
         var _id = $("#delModal").data("id");
-        $.post("@Url.Action("Exluir")", {id:_id});
+
+        //$.post("@Url.Action("Excluir")", { id: _id });
+
+        $.ajax({
+            url: "@Url.Action("Excluir")",
+            type: "POST",
+            dataType: "json",
+            data:{id:_id},
+            success: function (retorno) {
+                console.log(retorno);
+            }
+        });
     });
 </script>
 }

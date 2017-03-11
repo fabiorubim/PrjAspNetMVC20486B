@@ -76,13 +76,19 @@ namespace QuarkUp.CadCli.UI.Controllers
         [HttpPost]
         public ActionResult Excluir(int id)
         {
+            var msg = "Erro na exclusão!";
+            var status = false;
             var cli = _ctx.Clientes.Find(id);
-            _ctx.Clientes.Remove(cli);
-            _ctx.SaveChanges();
+            if (cli != null)
+            {
+                _ctx.Clientes.Remove(cli);
+                _ctx.SaveChanges();
+                msg = "Excluído com sucesso!";
+                status = true;
+            }
 
             //Status foi inventado
-            return Json(new { status=true,msg="Excluído com sucesso!"});
-
+            return Json(new { status = status, msg = msg });
         }
 
 
