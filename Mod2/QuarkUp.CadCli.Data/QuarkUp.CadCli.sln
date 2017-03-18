@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuarkUp.CadCli.Data", "Quar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuarkUp.CadCli.Domain", "QuarkUp.CadCli.Domain\QuarkUp.CadCli.Domain.csproj", "{12EB002A-0B43-46E5-8786-62447F58295F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuarkUp.CadCli.Tests", "QuarkUp.CadCli.Tests\QuarkUp.CadCli.Tests.csproj", "{E457C12B-C512-481A-98B9-5F97509AD889}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{12EB002A-0B43-46E5-8786-62447F58295F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12EB002A-0B43-46E5-8786-62447F58295F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12EB002A-0B43-46E5-8786-62447F58295F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E457C12B-C512-481A-98B9-5F97509AD889}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E457C12B-C512-481A-98B9-5F97509AD889}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E457C12B-C512-481A-98B9-5F97509AD889}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E457C12B-C512-481A-98B9-5F97509AD889}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
