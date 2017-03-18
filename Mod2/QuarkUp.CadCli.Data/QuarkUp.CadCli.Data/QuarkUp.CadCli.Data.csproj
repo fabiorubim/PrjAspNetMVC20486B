@@ -49,6 +49,7 @@
     <Compile Include="EF\CadCliContext.cs" />
     <Compile Include="EF\Maps\ClienteMap.cs" />
     <Compile Include="EF\Maps\UsuarioMap.cs" />
+    <Compile Include="EF\Repositories\ClienteRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

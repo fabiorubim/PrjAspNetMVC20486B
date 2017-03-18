@@ -1,5 +1,7 @@
 ﻿using QuarkUp.CadCli.Data.EF;
+using QuarkUp.CadCli.Data.EF.Repositories;
 using QuarkUp.CadCli.Domain.Entities;
+using QuarkUp.CadCli.Domain.Repositories;
 using QuarkUp.CadCli.UI.Models;
 using System;
 using System.Collections.Generic;
@@ -23,7 +25,18 @@ namespace QuarkUp.CadCli.UI.Controllers
         }
            */
 
-        private readonly CadCliContext _ctx = new CadCliContext();
+        //private readonly CadCliContext _ctx = new CadCliContext();
+        private readonly IClienteRepository _cliRepo;
+
+        //public ClientesController()
+        //{
+        //    _cliRepo = new ClienteRepository(); //É quando não temos injeção de dependência
+        //}
+
+        public ClientesController(IClienteRepository cliRepo)
+        {
+            _cliRepo = cliRepo;//É com injeção de dependência mais com Inversão de Controle
+        }
 
         [AllowAnonymous]//Só este não precisa de autenticação
         public ActionResult Index()
@@ -31,9 +44,10 @@ namespace QuarkUp.CadCli.UI.Controllers
             //var clientes = new List<ClienteVM>();
             
                 var clientes = 
-                   _ctx.Clientes
+                   //_ctx.Clientes
                    //.Skip(10).Take(20) --> paginação antes do ToList
-                    .ToList()
+                    //.ToList()
+                    _cliRepo.Obter()
                     .Select(cli => obterVM(cli));
             
 
@@ -52,8 +66,11 @@ namespace QuarkUp.CadCli.UI.Controllers
             //Acessar a base
             //var cliente = (from c in _ctx.Clientes where c.id == id select c).FirstOrDefault();
             //ou
-            var cliente = _ctx.Clientes.Find(id); //.FirstOrDefault(x => x.codigo == id); //FInd é do Entity framework
+            var cliente =
+                //_ctx.Clientes.Find(id); //.FirstOrDefault(x => x.codigo == id); //FInd é do Entity framework
 
+                _cliRepo.Obter(id);
+            
             if (cliente == null)
                 return HttpNotFound();
 
@@ -77,14 +94,16 @@ namespace QuarkUp.CadCli.UI.Controllers
                 var clienteDB = new Cliente { Id = cliVM.Id, Nome = cliVM.Nome, Idade = (byte) cliVM.Idade };
                 if (cliVM.Id == 0)
                 {
-                    _ctx.Clientes.Add(clienteDB);
+                   // _ctx.Clientes.Add(clienteDB);
+                    _cliRepo.Adicionar(clienteDB);
                 }
                 else
                 {
-                    _ctx.Entry(clienteDB).State = System.Data.Entity.EntityState.Modified;
+                    //_ctx.Entry(clienteDB).State = System.Data.Entity.EntityState.Modified;
+                    _cliRepo.Editar(clienteDB);
                 }
 
-                _ctx.SaveChanges();
+                //_ctx.SaveChanges();
                 //Retorna uma string na actionresult
                 //return Content("Dados salvos!");
                 return RedirectToAction("Index");
@@ -103,11 +122,13 @@ namespace QuarkUp.CadCli.UI.Controllers
 
             try
             {
-                var cli = _ctx.Clientes.Find(id);
+                var cli = //_ctx.Clientes.Find(id);
+                    _cliRepo.Obter(id);
                 if (cli != null)
                 {
-                    _ctx.Clientes.Remove(cli);
-                    _ctx.SaveChanges();
+                    //_ctx.Clientes.Remove(cli);
+                    //_ctx.SaveChanges();
+                    _cliRepo.Excluir(cli);
                     msg = "Excluído com sucesso!";
                     status = true;
                 }
@@ -127,7 +148,8 @@ namespace QuarkUp.CadCli.UI.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            _ctx.Dispose();
+            //_ctx.Dispose();
+            _cliRepo.Dispose();
         }
 
     }
