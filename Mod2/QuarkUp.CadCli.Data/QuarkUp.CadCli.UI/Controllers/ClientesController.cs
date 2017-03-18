@@ -1,4 +1,6 @@
-﻿using QuarkUp.CadCli.UI.Models;
+﻿using QuarkUp.CadCli.Data.EF;
+using QuarkUp.CadCli.Domain.Entities;
+using QuarkUp.CadCli.UI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,21 +28,27 @@ namespace QuarkUp.CadCli.UI.Controllers
         [AllowAnonymous]//Só este não precisa de autenticação
         public ActionResult Index()
         {
-            var clientes = new List<Cliente>();
-            {
-                clientes = _ctx.Clientes.ToList();
-            }
+            //var clientes = new List<ClienteVM>();
+            
+                var clientes = 
+                   _ctx.Clientes
+                   //.Skip(10).Take(20) --> paginação antes do ToList
+                    .ToList()
+                    .Select(cli => obterVM(cli));
+            
 
             return View(clientes);
         }
 
         public ActionResult Novo()
         {
-            return View("AddEdit",new Cliente());//Não é o nome padrão, que no caso é "Novo"
+            return View("AddEdit",new ClienteVM());//Não é o nome padrão, que no caso é "Novo"
         }
 
         public ActionResult Editar(int id)
         {
+            //AutoMapper - veja
+
             //Acessar a base
             //var cliente = (from c in _ctx.Clientes where c.id == id select c).FirstOrDefault();
             //ou
@@ -49,21 +57,31 @@ namespace QuarkUp.CadCli.UI.Controllers
             if (cliente == null)
                 return HttpNotFound();
 
-            return View("AddEdit",cliente);
+            return View("AddEdit", obterVM(cliente));               
+        }
+
+        private ClienteVM obterVM(Cliente cliente)
+        {
+            return new ClienteVM //AutoMapper==> recomendo para fazer o d=>para
+                { Id= cliente.Id, 
+                  Nome = cliente.Nome, 
+                  Idade= cliente.Idade
+                };
         }
 
         [HttpPost]
-        public ActionResult Salvar(Cliente cli)
+        public ActionResult Salvar(ClienteVM cliVM)
         {
             if (ModelState.IsValid)
             {
-                if (cli.Id == 0)
+                var clienteDB = new Cliente { Id = cliVM.Id, Nome = cliVM.Nome, Idade = (byte) cliVM.Idade };
+                if (cliVM.Id == 0)
                 {
-                    _ctx.Clientes.Add(cli);
+                    _ctx.Clientes.Add(clienteDB);
                 }
                 else
                 {
-                    _ctx.Entry(cli).State = System.Data.Entity.EntityState.Modified;
+                    _ctx.Entry(clienteDB).State = System.Data.Entity.EntityState.Modified;
                 }
 
                 _ctx.SaveChanges();
@@ -72,7 +90,7 @@ namespace QuarkUp.CadCli.UI.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View("AddEdit");
+            return View("AddEdit",cliVM);
         }
 
         [HttpPost]

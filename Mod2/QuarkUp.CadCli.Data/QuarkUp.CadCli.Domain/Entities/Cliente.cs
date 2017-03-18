@@ -12,7 +12,7 @@ namespace QuarkUp.CadCli.Domain.Entities
         
         public string Nome { get; set; }
        
-        public int Idade { get; set; }
+        public byte Idade { get; set; }
 
     }
 }

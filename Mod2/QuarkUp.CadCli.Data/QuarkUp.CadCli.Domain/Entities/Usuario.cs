@@ -11,6 +11,11 @@ namespace QuarkUp.CadCli.Domain.Entities
     {
         public IDictionary<string, string> Notificacoes { get; set; }
 
+        protected Usuario()
+        { //Para o EF não dar erro
+
+        }
+
         public Usuario(string nome, string email, string senha)
         {
             Nome = nome;

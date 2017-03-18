@@ -132,11 +132,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\CadCliContext.cs" />
-    <Compile Include="Models\Cliente.cs" />
+    <Compile Include="Models\ClienteVM.cs" />
     <Compile Include="Models\LoginVM.cs" />
-    <Compile Include="Models\StringHelper.cs" />
-    <Compile Include="Models\Usuario.cs" />
+    <Compile Include="Models\UsuarioVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -258,6 +256,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\QuarkUp.CadCli.Data\QuarkUp.CadCli.Data.csproj">
+      <Project>{8ee28513-d338-487f-a8b6-289eadae3192}</Project>
+      <Name>QuarkUp.CadCli.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QuarkUp.CadCli.Domain\QuarkUp.CadCli.Domain.csproj">
+      <Project>{12eb002a-0b43-46e5-8786-62447f58295f}</Project>
+      <Name>QuarkUp.CadCli.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
