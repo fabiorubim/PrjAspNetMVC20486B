@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuarkUp.CadCli.Domain.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace QuarkUp.CadCli.Domain.Entities
             Nome = nome;
             Email = email;
             Senha = StringHelper.Encrypt(senha);
-            validar();
+            Validar();
         }
 
         private void Validar()
@@ -44,7 +45,7 @@ namespace QuarkUp.CadCli.Domain.Entities
             Nome = nome;
             Email = email;
             Senha = StringHelper.Encrypt(senha);
-            validar();
+            Validar();
         }
     }
 }

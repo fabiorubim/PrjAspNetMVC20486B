@@ -47,12 +47,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EF\CadCliContext.cs" />
-    <Compile Include="EF\Cliente.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\QuarkUp.CadCli.Domain\QuarkUp.CadCli.Domain.csproj">
+      <Project>{12eb002a-0b43-46e5-8786-62447f58295f}</Project>
+      <Name>QuarkUp.CadCli.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
