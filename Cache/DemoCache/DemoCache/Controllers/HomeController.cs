@@ -16,7 +16,7 @@ namespace DemoCache.Controllers
             return View();
         }
 
-        [OutputCache(Duration = 10)]
+        [OutputCache(Duration = 10, VaryByParam="id")]
         public PartialViewResult GetPartial()
         {
             ViewBag.Msg = "Texto da Partial";
