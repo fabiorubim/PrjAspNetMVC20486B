@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div>
+    <div id="output"></div>
+    @Ajax.ActionLink("Obter Partial", "GetPartial",
+      new AjaxOptions
+      {
+          HttpMethod = "POST",
+          UpdateTargetId="output",
+          InsertionMode=InsertionMode.Replace
+      }
+      )
+</div>
