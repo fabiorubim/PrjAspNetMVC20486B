@@ -4,7 +4,14 @@
         <div>
             <em>@noticia.Data - @noticia.Categoria</em>
             <br />
-            <a href="@Url.Action("MostrarNoticia", new { id=@noticia.Id})">@noticia.Titulo</a>
+            <a href="@Url.Action("MostrarNoticia",
+            new
+            {
+                id = @noticia.Id,
+                titulo = @noticia.Titulo,
+                categoria = @noticia.Categoria
+            }
+            )">@noticia.Titulo</a>
         </div>
     }
 </div>
