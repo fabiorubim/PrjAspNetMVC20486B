@@ -1,0 +1,10 @@
+﻿<div>
+    @foreach (var noticia in Model)
+    {
+        <div>
+            <em>@noticia.Data - @noticia.Categoria</em>
+            <br />
+            <a href="@Url.Action("MostrarNoticia", new { id=@noticia.Id})">@noticia.Titulo</a>
+        </div>
+    }
+</div>

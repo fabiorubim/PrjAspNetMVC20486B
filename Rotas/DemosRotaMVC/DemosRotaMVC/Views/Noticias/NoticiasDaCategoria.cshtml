@@ -1,0 +1,11 @@
+﻿@model IEnumerable<DemosRotaMVC.Models.Noticia>
+
+@{
+    ViewBag.Title = "NoticiasDaCategoria";
+}
+
+<h2>@Model.First().Categoria</h2>
+
+@Html.Partial("_Noticias")
+
+<a href="@Url.Action("Index")">Voltar</a>

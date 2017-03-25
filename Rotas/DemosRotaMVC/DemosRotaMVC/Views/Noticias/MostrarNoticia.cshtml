@@ -1,0 +1,17 @@
+﻿@model DemosRotaMVC.Models.Noticia
+
+@{
+    ViewBag.Title = "MostrarNoticia";
+}
+
+<h2>@Model.Titulo</h2>
+
+<div>
+    <strong>@Model.Data</strong>
+    <br />
+    <p>
+        @Model.Conteudo
+    </p>
+</div>
+
+<a href="@Url.Action("Index")">Voltar</a>

@@ -1,0 +1,19 @@
+﻿@model IEnumerable<DemosRotaMVC.Models.Noticia>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div>
+    <ul>
+        @foreach (var cat in ViewBag.Categorias)
+        {
+            @*<li><a href="#">@cat</a></li>*@
+            <li>
+                @Html.ActionLink(@cat as string, "NoticiasDaCategoria", new {cat = @cat })
+            </li>
+        }
+        <li><a href="@Url.Action("Todas")">Todas as notícias</a></li>
+    </ul>
+</div>
+
+@Html.Partial("_Noticias")
