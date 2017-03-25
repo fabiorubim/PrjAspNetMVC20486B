@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.min.js"></script>    
+</head>
+<body ng-controller="clientes">
+    <h2>{{title}}</h2>
+
+    <table>
+        <tr>
+            <td>ID</td>
+            <td>ISBN</td>
+            <td>Nome</td>
+        </tr>
+        <tr ng-repeat="livro in livros">
+            <td>{{livro.Id}}</td>
+            <td>{{livro.ISBN}}</td>
+            <td>{{livro.Nome}}</td>
+        </tr>
+
+    </table>
+
+    <script>   
+        angular.module("app", [])
+            .factory("livroService", function ($http) {
+                function get() {
+                    return $http.get("http://localhost:24603/api/livros");
+                }
+
+                function post(livro) {
+                    return $http.post("http://localhost:24603/api/livros",livro);
+                }
+
+                return {
+                    todos: get,
+                    inserir:post
+                };
+            })
+
+            .controller("clientes", function ($scope, livroService) {
+                $scope.title = "Minha App";
+
+                livroService.todos().then(function (resposta) {
+                    $scope.livros = resposta.data;
+                    console.log($scope.livros);
+                });
+        });
+    </script>
+
+</body>
+</html>
